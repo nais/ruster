@@ -58,10 +58,8 @@ cargo update
 ### Filstruktur på prosjektet
 * All kildekode går i `src/*.rs` og eventuelt underkataloger
 * `src/lib.rs` for libraries
-* `src/main.rs` for binærer
-* Husk å få med binaries (cmd/X/main.go i go)
-* Lage et repo med en struktur
-* Denne fila skal inn i det repoet
+* `src/main.rs` for prosjekter som lager en binær
+* `src/bin/*.rs` for prosjekter som lager flere binærer, samme stilen som `cmd/*/main.go` for Go
 
 ### Moduler
 Når koden blir stor kan den brytes ned i moduler.
@@ -77,10 +75,28 @@ mod bar;
 mod mymod::submodule; // verify
 ```
 
+Moduler kan også implementeres inni en annen modulfil:
+
+```rust
+// main.rs
+
+fn main() {
+  crate::mymodule::foo(); // 42
+}
+
+mod mymodule {
+    fn foo() -> usize {
+        42
+    }
+}
+```
+
 ### Doc på cargo.rs
 For alle pakker som er publisert gjennom cargo finner man dokumentasjon på https://cargo.rs.
 
 Litt liknende konsept som https://pkg.go.dev.
+
+Man kan også bruke docs.rs til å lese dokumentasjon for pakker: https://docs.rs.
 
 ### RustRover
 IntelliJ sitt IDE for Rust.
