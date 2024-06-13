@@ -63,6 +63,30 @@ cargo bench
 cargo update
 ```
 
+#### Innspill fra @x10an14-nav om kjente pakker i økosystemet til Rust
+Bruker ofte heller [https://lib.rs](https://lib.rs) enn [https://crates.io](https://crates.io) for å finne / søke alternative tredjepartsavhengigheter.
+
+Mine preferanser (alternativer plusset sammen er gjerne brukt i kombinasjon):
+* relasjonelle DBs: `sqlx`
+* logging/metrics: `tracing` + `tracing-subscriber` + `tracing-opentelemetry` + `opentelemetry` + `opentelemetry-otlp`
+* k8s: `kube` + `k8s-openapi`
+* generere custom errors: `thiserror`
+* forenkle funksjons signaturer mht. `Result<T,E>`: `color-eyre` (`anyhow` er mer kjent og populært, men jeg foretrekker den andre)
+    ```rust
+    use color_eyre::eyre;
+
+    // Merk hvordan Result returverdien kun trenger å spesifisere `Ok(T)` tilfellet, ikke Error typen(e)
+    fn main() -> eyre::Result<()> {
+        color_eyre::install()?;
+
+        // ...
+    }
+    ```
+* parse json/toml/yaml/etc: `serde` (og dens familie)
+* konfigurasjon: `clap`
+* utføre HTTP requests: `reqwest`
+* rammeverk for å gjøre ting async: `tokio`
+
 ### Filstruktur på prosjektet
 * All kildekode går i `src/*.rs` og eventuelt underkataloger
 * `src/lib.rs` for libraries
