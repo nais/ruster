@@ -2,7 +2,8 @@ mod old;
 mod mymodule;
 mod fib;
 
-
-fn main() {
-
+#[tokio::main]
+async fn main() {
+    // webapp
+    // /foo (request) -> json(response)
 }
