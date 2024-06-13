@@ -86,7 +86,7 @@ mod mymod::submodule; // verify
 Moduler kan også implementeres inni en annen modulfil:
 
 ```rust
-// main.rs
+// old
 
 fn main() {
   crate::mymodule::foo(); // 42
