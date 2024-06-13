@@ -15,4 +15,8 @@ Cargo.lock
 
 # IDEA and dotfiles
 .idea
-.env
+.env*
+
+# Nix stuffs
+result*
+.direnv/
