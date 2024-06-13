@@ -22,6 +22,11 @@ pacman -S rustup
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ```
 
+Og deretter init:
+```bash
+rustup-init
+```
+
 ### Installere toolchain med Rustup
 Her installeres cargo, som fungerer som compiler, linker, pakkemanager, etc.
 
