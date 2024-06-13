@@ -15,6 +15,13 @@ enum Error {
     SomethingElse(SubSystemError),
 }
 
+// type Error = String;
+// const (
+// MyErrorOne = "foo";
+// MyErrorTwo = "bar";
+// )
+//
+
 #[derive(Debug, Clone)]
 enum SubSystemError {
     Whatever
@@ -77,6 +84,10 @@ fn main() -> Result<(), Error> {
 
     // if err:=communicate(); err != nil {
     // return err;
+    // }
+
+    // func foo(a *int) {
+    // x := *a;
     // }
 }
 
