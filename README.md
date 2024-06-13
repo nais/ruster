@@ -23,9 +23,12 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ```
 
 Og deretter init:
+
 ```bash
 rustup-init
 ```
+
+Legg gjerne `~/.cargo/bin` i `$PATH` for å få tilgang til å kjøre `cargo` og alt annet som installeres med `cargo install`.
 
 ### Installere toolchain med Rustup
 Her installeres cargo, som fungerer som compiler, linker, pakkemanager, etc.
