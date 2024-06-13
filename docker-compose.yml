@@ -1,0 +1,11 @@
+version: "3"
+services:
+  postgres:
+    command: postgres -c log_statement=all
+    image: postgres:12-alpine
+    ports:
+      - "9000:5432"
+    environment:
+      - "POSTGRES_USER=postgres"
+      - "POSTGRES_PASSWORD=postgres"
+      - "POSTGRES_DB=postgres"
