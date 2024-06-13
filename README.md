@@ -63,30 +63,6 @@ cargo bench
 cargo update
 ```
 
-#### Innspill fra @x10an14-nav om kjente pakker i økosystemet til Rust
-Bruker ofte heller [https://lib.rs](https://lib.rs) enn [https://crates.io](https://crates.io) for å finne / søke alternative tredjepartsavhengigheter.
-
-Mine preferanser (alternativer plusset sammen er gjerne brukt i kombinasjon):
-* relasjonelle DBs: `sqlx`
-* logging/metrics: `tracing` + `tracing-subscriber` + `tracing-opentelemetry` + `opentelemetry` + `opentelemetry-otlp`
-* k8s: `kube` + `k8s-openapi`
-* generere custom errors: `thiserror`
-* forenkle funksjons signaturer mht. `Result<T,E>`: `color-eyre` (`anyhow` er mer kjent og populært, men jeg foretrekker den andre)
-    ```rust
-    use color_eyre::eyre;
-
-    // Merk hvordan Result returverdien kun trenger å spesifisere `Ok(T)` tilfellet, ikke Error typen(e)
-    fn main() -> eyre::Result<()> {
-        color_eyre::install()?;
-
-        // ...
-    }
-    ```
-* parse json/toml/yaml/etc: `serde` (og dens familie)
-* konfigurasjon: `clap`
-* utføre HTTP requests: `reqwest`
-* rammeverk for å gjøre ting async: `tokio`
-
 ### Filstruktur på prosjektet
 * All kildekode går i `src/*.rs` og eventuelt underkataloger
 * `src/lib.rs` for libraries
@@ -176,6 +152,8 @@ cargo run
     * Channels (multiple producers, single consumer)
 
 ## Libs
+Bruk [https://lib.rs](https://lib.rs) for å finne libs.
+
 ### Kubernetes
 * https://github.com/kube-rs/kube (ikke testet)
 
@@ -194,7 +172,7 @@ cargo run
 * https://docs.rs/axum/latest/axum/index.html (Web application framework. Cirka Go-chi + snacks)
 * https://docs.rs/tower/latest/tower/ (middleware)
 * https://docs.rs/hyper/latest/hyper/ (ikke testet, low level http)
-* https://crates.io/crates/reqwest (ikke testet)
+* https://crates.io/crates/reqwest (gjøre http-requests)
 
 ### Postgres
 * https://docs.rs/sqlx/latest/sqlx/ (async sql toolkit for Rust, likner på sqlc)
@@ -207,12 +185,29 @@ Tokio is an event-driven, non-blocking I/O platform for writing asynchronous app
 * https://docs.rs/config/latest/config/ (ikke testet)
 
 ### Command-line interfaces
-* https://docs.rs/clap/latest/clap/
+* https://docs.rs/clap/latest/clap/ (kan også brukes til config)
 
 ### Pub/sub
 * https://docs.rs/google-cloud-pubsub/latest/google_cloud_pubsub/ (ikke testet)
 
 ### Kafka
+...
+
+### @x10an14-nav
+* logging/metrics: `tracing` + `tracing-subscriber` + `tracing-opentelemetry` + `opentelemetry` + `opentelemetry-otlp`
+* k8s: `kube` + `k8s-openapi`
+* generere custom errors: `thiserror`
+* forenkle funksjons signaturer: `color-eyre` (`anyhow` er mer kjent og populært)
+    ```rust
+    use color_eyre::eyre;
+
+    // Merk hvordan Result returverdien kun trenger å spesifisere `Ok(T)` tilfellet, ikke Error typen(e)
+    fn main() -> eyre::Result<()> {
+        color_eyre::install()?;
+
+        // ...
+    }
+    ```
 
 ## Sammenlikne med Go
 * Fordeler: økosystem, ergonomi, typesystem, funksjonell syntaks, match arms
