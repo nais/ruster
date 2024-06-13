@@ -31,3 +31,18 @@ fn add_fibonacci_13(my_vector: &mut Vec<i32>) -> &mut Vec<i32> {
     my_vector.push(13);
     my_vector
 }
+
+// Her har du en trait
+trait NavDokument {
+    fn dokumenter() {
+        todo!()
+    }
+}
+
+// her har du en annen trait, som arver NavDokument traitet
+trait ArkiverbartDokument: NavDokument {
+    fn arkiver() {
+        Self::dokumenter();
+        todo!()
+    }
+}
