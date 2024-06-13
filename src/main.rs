@@ -3,7 +3,7 @@ use std::time::Duration;
 use axum::{Json, Router};
 use axum::http::StatusCode;
 use axum::routing::post;
-use log::error;
+use log::{error, warn};
 use log::LevelFilter::Trace;
 use serde::{Deserialize, Serialize};
 use sqlx::{FromRow};
@@ -20,14 +20,24 @@ async fn main() {
         .init();
     init_and_connect_to_database("postgres://postgres:postgres@localhost:9000/postgres").await.unwrap();
 
-    tokio::spawn(async {
+    let (tx, rx) = std::sync::mpsc::channel::<String>();
+
+    tokio::spawn(async move {
         loop {
             match cleanup_db().await {
                 Ok(_) => {}
-                Err(sqlx::Error::RowNotFound) => {}
+                Err(sqlx::Error::RowNotFound) => {
+                    tx.send("row was not found".into()).unwrap();
+                }
                 Err(err) => panic!("{:?}", err)
             }
-            time::sleep(Duration::from_secs(10)).await;
+            let _ = time::sleep(Duration::from_secs(10)).await;
+        }
+    });
+
+    tokio::spawn(async move {
+        while let Ok(msg) = rx.recv() {
+            warn!("{:?}", msg)
         }
     });
 
