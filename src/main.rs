@@ -1,11 +1,13 @@
 use std::future::Future;
+use std::time::Duration;
 use axum::{Json, Router};
 use axum::http::StatusCode;
 use axum::routing::post;
 use log::error;
 use log::LevelFilter::Trace;
 use serde::{Deserialize, Serialize};
-use sqlx::{Error, FromRow};
+use sqlx::{FromRow};
+use tokio::time;
 
 mod old;
 mod mymodule;
@@ -17,6 +19,18 @@ async fn main() {
         .filter_level(Trace)
         .init();
     init_and_connect_to_database("postgres://postgres:postgres@localhost:9000/postgres").await.unwrap();
+
+    tokio::spawn(async {
+        loop {
+            match cleanup_db().await {
+                Ok(_) => {}
+                Err(sqlx::Error::RowNotFound) => {}
+                Err(err) => panic!("{:?}", err)
+            }
+            time::sleep(Duration::from_secs(10)).await;
+        }
+    });
+
     let router = Router::new().route("/", post(post_message));
     let listener = tokio::net::TcpListener::bind("127.0.0.1:6000").await.unwrap();
     axum::serve(listener, router).await.unwrap();
@@ -47,6 +61,13 @@ async fn post_message(Json(post_message_request): Json<PostMessageRequest>) -> R
 struct Message {
     id: i32,
     msg: String,
+}
+
+async fn cleanup_db() -> Result<(), sqlx::Error> {
+    sqlx::query(r#"
+    DELETE FROM messages;
+    "#
+    ).fetch_one(db()).await.map(|_| ())
 }
 
 async fn commit_msg_to_db(msg: String) -> Result<Message, sqlx::Error> {
