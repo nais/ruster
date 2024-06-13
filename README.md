@@ -145,24 +145,24 @@ cargo run
 
 ## Libs
 ### Kubernetes
-* https://github.com/kube-rs/kube (utestet)
+* https://github.com/kube-rs/kube (ikke testet)
 
 ### Serialisering (JSON/YAML)
 * https://serde.rs/
-* https://github.com/ethiraric/yaml-rust2
+* https://github.com/ethiraric/yaml-rust2 (ikke testet)
 
 ### GraphQL
-* Server: https://github.com/graphql-rust/juniper (utestet)
-* Klient: https://github.com/graphql-rust/graphql-client (utestet)
+* Server: https://github.com/graphql-rust/juniper (ikke testet)
+* Klient: https://github.com/graphql-rust/graphql-client (ikke testet)
 
 ### Protobuf & gRPC
-* https://github.com/tokio-rs/prost (Proto + gRPC, utestet)
+* https://github.com/tokio-rs/prost (Proto + gRPC, ikke testet)
 
 ### HTTP server/client
 * https://docs.rs/axum/latest/axum/index.html (Web application framework. Cirka Go-chi + snacks)
 * https://docs.rs/tower/latest/tower/ (middleware)
-* https://docs.rs/hyper/latest/hyper/ (utestet, low level http)
-* https://crates.io/crates/reqwest (utestet)
+* https://docs.rs/hyper/latest/hyper/ (ikke testet, low level http)
+* https://crates.io/crates/reqwest (ikke testet)
 
 ### Postgres
 * https://docs.rs/sqlx/latest/sqlx/ (async sql toolkit for Rust, likner på sqlc)
@@ -172,13 +172,13 @@ Tokio is an event-driven, non-blocking I/O platform for writing asynchronous app
 * https://docs.rs/tokio/latest/tokio/
 
 ### Configuration
-* https://docs.rs/config/latest/config/ (utestet)
+* https://docs.rs/config/latest/config/ (ikke testet)
 
 ### Command-line interfaces
 * https://docs.rs/clap/latest/clap/
 
 ### Pub/sub
-* https://docs.rs/google-cloud-pubsub/latest/google_cloud_pubsub/
+* https://docs.rs/google-cloud-pubsub/latest/google_cloud_pubsub/ (ikke testet)
 
 ### Kafka
 
