@@ -191,7 +191,7 @@ Tokio is an event-driven, non-blocking I/O platform for writing asynchronous app
 * https://docs.rs/google-cloud-pubsub/latest/google_cloud_pubsub/ (ikke testet)
 
 ### Kafka
-...
+* https://docs.rs/rdkafka/latest/rdkafka/index.html ([eksempel fra teamsykmelding](https://github.com/navikt/teamsykmelding-pik-2))
 
 ### @x10an14-nav
 * logging/metrics: `tracing` + `tracing-subscriber` + `tracing-opentelemetry` + `opentelemetry` + `opentelemetry-otlp`
