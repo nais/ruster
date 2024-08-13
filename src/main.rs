@@ -1,17 +1,19 @@
-use std::future::Future;
 use std::time::Duration;
+
 use axum::{Json, Router};
 use axum::http::StatusCode;
 use axum::routing::post;
 use log::{error, warn};
 use log::LevelFilter::Trace;
 use serde::{Deserialize, Serialize};
-use sqlx::{FromRow};
+use sqlx::FromRow;
 use tokio::time;
 
 mod old;
-mod mymodule;
 mod fib;
+
+#[allow(dead_code)]
+mod rust_vs_go;
 
 #[tokio::main]
 async fn main() {
@@ -41,7 +43,10 @@ async fn main() {
         }
     });
 
-    let router = Router::new().route("/", post(post_message));
+    let router = Router::new()
+        .route("/post", post(post_message))
+        .route("/get", post(get_message))
+        ;
     let listener = tokio::net::TcpListener::bind("127.0.0.1:6000").await.unwrap();
     axum::serve(listener, router).await.unwrap();
 }
@@ -62,6 +67,16 @@ async fn post_message(Json(post_message_request): Json<PostMessageRequest>) -> R
         Err(err) => {
             error!("{:?}", err);
             Err(StatusCode::BAD_REQUEST)
+        }
+    }
+}
+
+async fn get_message(Json(get_message_request): Json<GetMessageRequest>) -> Result<Json<Message>, StatusCode> {
+    match read_message_from_db(get_message_request.id).await {
+        Ok(msg) => Ok(msg.into()),
+        Err(err) => {
+            error!("{:?}", err);
+            Err(StatusCode::NOT_FOUND)
         }
     }
 }
@@ -87,7 +102,7 @@ async fn commit_msg_to_db(msg: String) -> Result<Message, sqlx::Error> {
     ).bind(msg).fetch_one(db()).await
 }
 
-async fn get_message(id: i32) -> Result<Message, sqlx::Error> {
+async fn read_message_from_db(id: i32) -> Result<Message, sqlx::Error> {
     sqlx::query_as(r#"
     SELECT * from messages where id = $1;
     "#

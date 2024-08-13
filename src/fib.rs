@@ -1,10 +1,6 @@
-use crate::mymodule;
-
 #[allow(dead_code)]
 fn fib() {
     println!("Hello, world!");
-    mymodule::hello_world();
-    mymodule::mysubmodule::hello_world2();
 
     // Immutable vector
     let my_vector = Vec::from([1, 1, 2, 3, 5, 8]);

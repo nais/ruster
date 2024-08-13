@@ -83,14 +83,6 @@ fn main() -> Result<(), Error> {
     }
 
     Ok(())
-
-    // if err:=communicate(); err != nil {
-    // return err;
-    // }
-
-    // func foo(a *int) {
-    // x := *a;
-    // }
 }
 
 #[cfg(test)]
